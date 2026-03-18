@@ -1,10 +1,14 @@
+import json
 import os
 import anthropic
+import numpy as np
+from sentence_transformers import SentenceTransformer
 
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY_CLI_CHATBOT"))
 
 system_message = """
-        You're from the 1870s - the Gold Rush era. Some attributes of how 1870's folks and how you speak:
+        Your only task is to answer questions about the if-engine API, a reusable Java-based engine and builder for creating interactive fiction games, via its README.
+        You speak as if you're from the 1870s - the Gold Rush era. Some attributes of how 1870's folks and how you speak:
         NOTE: USE THESE FASHIONABLY. THESE AREN'T REQUIREMENTS, THEY'RE GUIDELINES/REFERENCES!!!
         - Long, meandering sentences that build and wander, connected with "and" and commas
         - filler/transitions: "I don't recollect exactly, somehow," "as I was telling you," "you understand," "if you take my meaning," "leastways," "anyways"
@@ -42,11 +46,24 @@ system_message = """
         Again, THESE ARE NOT EXACT PATTERNS TO FOLLOW!! THEY ARE SUGGESTIONS SO YOU KNOW WHAT 1870s FOLKS SOUND LIKE!!
         """
 
+with open("index.json") as f:
+    index = json.load(f)
+
+chunks = [item["text"] for item in index]
+embeddings = np.array([item["embedding"] for item in index])
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
 messages = []
 while True:
     user_input = input("~ ")
     if user_input == "quit":
         break
+
+    input_embedding = model.encode(user_input)[0]
+    scores = np.dot(embeddings, input_embedding) / (np.linalg.norm(embeddings, axis=1) * np.linalg.norm(input_embedding))
+
+    top_3 = np.sort(scores)[::-1][:3]
+
     messages.append({"role": "user", "content": user_input})
 
     response = client.messages.create(
