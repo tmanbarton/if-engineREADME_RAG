@@ -29,5 +29,5 @@ for chunk, embedding in zip(chunks, embeddings):
         "embedding": embedding.tolist(),
     })
 
-    with open(JSON_FILE_PATH, "w") as f:
-        json.dump(index, f)
+with open(JSON_FILE_PATH, "w") as f:
+    json.dump(index, f)
