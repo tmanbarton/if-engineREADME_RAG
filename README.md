@@ -1,6 +1,8 @@
 # if-engine RAG Chatbot
 
-A CLI chatbot that answers questions about the [if-engine](https://github.com/tmanbarton/if-engine) API using RAG (Retrieval Augmented Generation). Ask it how to use the engine, and it will find the relevant documentation in the repo's README to answer the question.
+I kept forgetting how to use an API I created for myself to create interactive fiction games: [if-engine](https://github.com/tmanbarton/if-engine).
+The repo has good documentation so, instead of going to the docs every time I forget something, 
+I çreated a CLI chatbot that answers questions about the API using RAG (Retrieval Augmented Generation). Ask it how to use the engine, and it will find the relevant documentation in the repo's README to answer the question.
 
 ## How it works
 
