@@ -72,7 +72,7 @@ while True:
     messages.append({"role": "user", "content": augmented_input})
 
     # Send message to LLM
-    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY_CLI_CHATBOT"))
+    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     response = client.messages.create(
         model = "claude-haiku-4-5",
         max_tokens = 1024,
