@@ -8,6 +8,7 @@ LOCAL_README_PATH = "../if-engine/README.md"
 GITHUB_README_URL = "https://raw.githubusercontent.com/tmanbarton/if-engine/main/README.md"
 JSON_FILE_PATH = "index.json"
 
+# Get the README either locally or from the public url
 readme = None
 if os.path.exists(LOCAL_README_PATH):
     with open(LOCAL_README_PATH) as f:
