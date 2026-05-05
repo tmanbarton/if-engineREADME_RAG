@@ -1,5 +1,4 @@
 import json
-import os
 import anthropic
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -40,12 +39,12 @@ while True:
     messages.append({"role": "user", "content": augmented_input})
 
     # Send message to LLM
-    client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+    client = anthropic.Anthropic()
     response = client.messages.create(
         model = "claude-haiku-4-5",
         max_tokens = 1024,
         system = system_message,
-        messages = messages)
+        messages=messages)
 
     # Replace user message (last element in message array) with only user input. Don't want documentation in conversation history.
     # Append assistant message to conversation history and print
